@@ -22,8 +22,39 @@ router.post('/send-otp', async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: 'Your OTP Code',
-      text: `Your OTP is: ${otp}`,
+      subject: 'Your ITBytes reset password code',
+      html: ` <!DOCTYPE html>
+    <html>
+      <head>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        </style>
+      </head>
+      <body style="font-family: 'Poppins', sans-serif; background: #f4f4f4; padding: 20px;">
+        <div style="max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+          
+          <!-- Logo -->
+          <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://res.cloudinary.com/dsayqafkn/image/upload/v1751510579/logo_colored_pwo3ps.png" alt="YourApp Logo" style="height: 60px;" />
+          </div>
+
+          <!-- Content -->
+          <h2 style="text-align: center; color: #007BFF;">OTP Verification</h2>
+          <p>Hello,</p>
+          <p>You requested to reset your password. Use the OTP code below:</p>
+          
+          <div style="text-align: center; font-size: 32px; font-weight: bold; margin: 20px 0; color: #222;">
+            ${otp}
+          </div>
+
+          <p>This OTP will expire in 5 minutes. Please don’t share it with anyone.</p>
+          <p>If you didn’t request a reset, you can ignore this email.</p>
+
+          <br/>
+          <p style="font-size: 14px; color: #888;">— ITBytes Team</p>
+        </div>
+      </body>
+    </html>`,
     });
 
     setOTP(email, otp);
